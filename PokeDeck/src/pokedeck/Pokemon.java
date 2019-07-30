@@ -2,17 +2,17 @@ package pokedeck;
 
 public class Pokemon {
 
-	private int id; // might want to use an enumerator to store these, and then save values withtin
+	private int id;
 	private TypePokemon type;
-	private String nickName;
-	private int hp = 1;
-	private int atk = 1;
-	private int def = 1;
-	private int spAtk = 1;
-	private int spDef = 1;
-	private int speed = 1;
-	private int level = 0;
+	private String nickName = type.name();
 	private int exp = 0;
+	private int level = exp/100;
+	private int hp = type.hp + type.hp*level;
+	private int atk = type.atk + type.atk*level;
+	private int def = type.def + type.def*level;
+	private int spAtk = type.spAtk + type.spAtk*level;
+	private int spDef = type.spDef + type.spDef*level;
+	private int speed = type.speed + type.speed*level;
 
     public Pokemon(int id, TypePokemon type, String nickName) {
         this.id = id;
@@ -20,7 +20,6 @@ public class Pokemon {
         this.nickName = nickName;
     }
 
-	
 
     public Pokemon(int id, TypePokemon type, String nickName, int hp, int atk, int def, int spAtk, int spDef, int speed, int level, int exp) {
         this.id = id;
@@ -120,6 +119,13 @@ public class Pokemon {
      */
     public int getExp() {
         return exp;
+    }
+
+    void replace(Pokemon pokemon) {
+        this.id = pokemon.getId();
+        this.type = pokemon.getType();
+        this.nickName = pokemon.getNickName();
+        this.exp = pokemon.getExp();
     }
         
         
