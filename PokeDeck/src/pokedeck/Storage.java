@@ -20,6 +20,12 @@ public class Storage {
 
 	private ArrayList<Pokemon> listOfPokemon = new ArrayList<Pokemon>();
 
+        public Storage() {};
+        
+        public Storage(ArrayList<Pokemon> listOfPokemon) {
+            this.listOfPokemon = listOfPokemon;
+        };
+        
 	/**
 	 * 
 	 * @param pokemon
@@ -78,5 +84,14 @@ public class Storage {
             ///////////////////////////////////////////////////////////////////////
             return success;
         }
+        
+        @Override
+        public String toString() {
+            String result = "";
+            for (int i = 0; i < listOfPokemon.size()-1; i++) {
+                result += listOfPokemon.get(i) +"\n";
+            }
+            return result;
+        };
 
 }

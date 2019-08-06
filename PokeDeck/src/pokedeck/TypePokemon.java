@@ -1,8 +1,9 @@
 package pokedeck;
 
 public enum TypePokemon {
-    EMPTY(), PIKACHU(35, 55, 40, 50, 50, 90);
-    
+    EMPTY(), PIKACHU(35, 55, 40, 50, 50, 90), CHARMANDER(39, 52, 43, 60, 50, 65), 
+    BULBASAUR(45, 49, 49, 65, 65, 45), EVEE(55, 55, 50, 45, 65, 55), 
+    DRAGONITE(91, 134, 95, 100, 100, 80), LUGIA(106, 90, 130, 90, 154, 110);
     public final int hp;
     public final int atk;
     public final int def;

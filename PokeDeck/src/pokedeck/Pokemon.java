@@ -2,21 +2,34 @@ package pokedeck;
 
 public class Pokemon {
 
-	private int id;
+	private int id = 0000;
 	private TypePokemon type;
-	private String nickName = type.name();
-	private int exp = 0;
-	private int level = exp/100;
-	private int hp = type.hp + type.hp*level;
-	private int atk = type.atk + type.atk*level;
-	private int def = type.def + type.def*level;
-	private int spAtk = type.spAtk + type.spAtk*level;
-	private int spDef = type.spDef + type.spDef*level;
-	private int speed = type.speed + type.speed*level;
+	private String nickName;
+	private int exp;
+	private int level;
+	private int hp;
+	private int atk;
+	private int def;
+	private int spAtk;
+	private int spDef;
+	private int speed;
 
     public Pokemon(int id, TypePokemon type, String nickName) {
-        this.id = id;
         this.type = type;
+        setStats();
+        this.id = id;
+        
+        this.nickName = nickName;
+    }
+    
+    public Pokemon(TypePokemon type) {
+        this.type = type;
+        setStats();
+    }
+    
+    public Pokemon(TypePokemon type, String nickName) {
+        this.type = type;
+        setStats();
         this.nickName = nickName;
     }
 
@@ -33,6 +46,18 @@ public class Pokemon {
         this.speed = speed;
         this.level = level;
         this.exp = exp;
+    }
+    
+    public void setStats() {
+        nickName = type.name();
+	exp = 0;
+	level = exp/100;
+	hp = type.hp + type.hp*level;
+	atk = type.atk + type.atk*level;
+	def = type.def + type.def*level;
+	spAtk = type.spAtk + type.spAtk*level;
+	spDef = type.spDef + type.spDef*level;
+	speed = type.speed + type.speed*level;
     }
         
         
@@ -127,6 +152,16 @@ public class Pokemon {
         this.nickName = pokemon.getNickName();
         this.exp = pokemon.getExp();
     }
+    
+        @Override
+    public String toString() {
+        String result = "";
+        result += "id = " + id + ", type = " + type + ", nickName = " 
+                + nickName + ", hp = " + hp + ", atk = " + atk + ", def = " +
+                def + ", spAtk = " + spAtk + ", spDef = " + spDef + ", speed = " +
+                speed + ", level = " + level + ", exp = " + exp;
+        return result;
+    };
         
         
 

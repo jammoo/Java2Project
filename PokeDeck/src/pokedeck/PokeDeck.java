@@ -15,7 +15,14 @@ public class PokeDeck {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        Pokemon Larry = new Pokemon(TypePokemon.LUGIA, "Larry");
+        System.out.println(Larry.toString());
+        Storage pokeDeck = new Storage();
+        pokeDeck.addPokemon(new Pokemon(TypePokemon.BULBASAUR));
+        pokeDeck.addPokemon(new Pokemon(TypePokemon.CHARMANDER));
+        pokeDeck.addPokemon(new Pokemon(TypePokemon.DRAGONITE));
+        pokeDeck.addPokemon(new Pokemon(TypePokemon.EVEE));
+        System.out.println(pokeDeck.toString());
     }
     
 }
