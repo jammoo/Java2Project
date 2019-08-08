@@ -4,6 +4,8 @@ package pokedeck;
  * @author syed
  */
 
+import java.util.ArrayList;
+import java.util.Collections;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -63,7 +65,7 @@ public class Display extends Application {
       data.setPadding(new Insets(50, 10, 50, 0));
       data.setMinHeight(300);
       data.setMinWidth(300);
-      title.setPadding(new Insets(15, 15, 15, 290));
+      title.setPadding(new Insets(15, 15, 15, 600));
       title.setStyle("-fx-font: normal bold 30px 'serif'; -fx-text-fill:orange; -fx-text-alignment: center;"); // how to make it centered???
 
       BorderPane pane = new BorderPane();
@@ -84,7 +86,7 @@ public class Display extends Application {
       getSearch.setPadding(new Insets(30, 30, 30, 30));
       Button edit = new Button("Edit");
       edit.setPadding(new Insets(30, 30, 30, 30));
-      Button move = new Button("Move");
+      Button move = new Button("Move To Top");
       move.setPadding(new Insets(30, 30, 30, 30));
       pane.setBottom(buttons);
       buttons.getChildren().add(getSearch);
@@ -93,7 +95,7 @@ public class Display extends Application {
       buttons.getChildren().add(add);
       buttons.getChildren().add(delete);
       buttons.setSpacing(170);
-      buttons.setPadding(new Insets(50, 50, 50, 50));
+      buttons.setPadding(new Insets(50, 50, 50, 80));
    
         
         // listen for when a name is selected, then perform actions
@@ -123,15 +125,13 @@ public class Display extends Application {
                   });
                   // add functionality when clicking move
                   move.setOnAction(e -> {
+                      
                       int temp = selectedPokemon;
                       list.getSelectionModel().selectedItemProperty().addListener(
                               selector -> {
-                                  for (int i: list.getSelectionModel().getSelectedIndices()) {
-                                      selectedPokemon = i;
-                                  }
+                                  Collections.swap(bank.getListOfPokemon(), selectedPokemon, 0);
                               }
                       );
-                      bank.move(temp, selectedPokemon);
                       //bank.removePokemon(selectedPokemon); // not done yet!
                       updatePokemon();
                   });
@@ -188,10 +188,11 @@ public class Display extends Application {
                       Button submit = new Button("Confirm");
                       editPane.getChildren().addAll(submit);
                       // create all the property labels and properties of the selected pokemon
-                      Scene editScene = new Scene(editPane, 500, 400);
+                      Scene editScene = new Scene(editPane, 500, 680);
                       Stage editStage = new Stage();
                       editStage.setTitle("Edit Pokemon");
                       editStage.setScene(editScene);
+                      editPane.setSpacing(20);
                       editStage.show();
                       // then allow the user to change whichever fields they want
                       updatePokemon();
@@ -246,23 +247,35 @@ public class Display extends Application {
          public void handle (ActionEvent event)
          {
             //PopUp Search Pane
+             ChoiceBox<TypePokemon> search = new ChoiceBox<>();
+             for (int i = 0; i < TypePokemon.values().length; i++) {
+                 search.getItems().add(TypePokemon.values()[i]);
+             }
             TextField tf = new TextField();
             Button doSearch = new Button("Search");
             VBox pane2 = new VBox();
-            pane2.getChildren().add(tf);
+            pane2.getChildren().add(search);
             pane2.getChildren().add(doSearch);
             doSearch.setMinWidth(100);
             pane2.setAlignment(Pos.CENTER);
             pane2.setPadding(new Insets(5, 50, 50, 50));
-
             pane2.setSpacing(10);
-
             pane2.autosize();
             Scene scene2 = new Scene(pane2, 500, 200);
             Stage stage2 = new Stage();
             stage2.setTitle("Search Pokemon");
             stage2.setScene(scene2);
             stage2.show();
+            doSearch.setOnAction(eh -> {
+                if (search.getValue() == TypePokemon.EMPTY) {
+                    updatePokemon();
+                }
+                else {
+                    ArrayList<Pokemon> temp = bank.findPokemon(search.getValue());
+                    updatePokemon(temp);
+                }
+                stage2.close();
+            });
             //stage2.setScene(scene2);
          }
       });
@@ -279,6 +292,19 @@ public class Display extends Application {
             temp[i] = new ImageView(bank.getListOfPokemon().get(i).getImg());
         }
         pokemonImages = temp;
+    }
+    
+    public void updatePokemon(ArrayList<Pokemon> temps) {
+        Storage temp = new Storage(temps);
+        // update the listed names of pokemon by clearing and re-adding them
+        list.getItems().clear();
+        list.getItems().addAll(temp.getNames());
+        // update the list of the image files for the pokemon
+        ImageView[] tem = new ImageView[temp.getListOfPokemon().size()];
+        for (int i = 0; i < bank.getListOfPokemon().size(); i++) {
+            tem[i] = new ImageView(bank.getListOfPokemon().get(i).getImg());
+        }
+        pokemonImages = tem;
     }
     
     @Override

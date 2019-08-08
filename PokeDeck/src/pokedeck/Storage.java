@@ -69,8 +69,19 @@ public class Storage {
         /**
          * this method should return a search result
          */
-        public void findPokemon() {
-            ///////////////////////////////////////////////////////////////////////
+        public ArrayList<Pokemon> findPokemon(TypePokemon search) {
+            ArrayList<Pokemon> temp = new ArrayList<>();
+            if (search == null) {
+                return this.listOfPokemon;
+            }
+            else {
+                for (Pokemon pokemon : this.listOfPokemon) {
+                    if (pokemon.getType() == search) {
+                        temp.add(pokemon);
+                    }
+                }
+                return temp;
+            }
         }
 
 	public ArrayList<Pokemon> getListOfPokemon() {

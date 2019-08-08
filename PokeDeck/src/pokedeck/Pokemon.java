@@ -152,8 +152,9 @@ public class Pokemon {
     }
 
     void replace(Pokemon pokemon) {
-        this.id = pokemon.getId();
         this.type = pokemon.getType();
+        setStats();
+        this.id = pokemon.getId();
         this.nickName = pokemon.getNickName();
         this.exp = pokemon.getExp();
     }
