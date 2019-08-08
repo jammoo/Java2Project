@@ -66,7 +66,7 @@ public class Display extends Application {
       data.setMinHeight(300);
       data.setMinWidth(300);
       title.setPadding(new Insets(15, 15, 15, 600));
-      title.setStyle("-fx-font: normal bold 30px 'serif'; -fx-text-fill:orange; -fx-text-alignment: center;"); // how to make it centered???
+      title.setStyle("-fx-font: normal bold 60px 'serif'; -fx-text-fill:orange; -fx-text-alignment: center;"); // how to make it centered???
 
       BorderPane pane = new BorderPane();
       pane.setLeft(new ScrollPane(list));
