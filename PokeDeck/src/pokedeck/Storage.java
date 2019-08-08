@@ -1,6 +1,9 @@
 package pokedeck;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -35,6 +38,12 @@ public class Storage {
                 temp[i] = listOfPokemon.get(i).getType().name();
             }
             return temp;
+        }
+        
+        public void move(int i1, int i2) {
+            Pokemon temp = listOfPokemon.get(i1);
+            listOfPokemon.get(i1).replace(listOfPokemon.get(i2));
+            listOfPokemon.get(i2).replace(temp);
         }
         
 	/**
@@ -82,7 +91,41 @@ public class Storage {
          */
         public boolean loadData() {
             boolean success = false;
-            ///////////////////////////////////////////////////////////////////////
+            // The name of the file to open.
+            String fileName = "pokeDeckData.txt";
+            // This will reference one line at a time
+            String line = null;
+            try {
+                // create FileReader object
+                FileReader fileReader = new FileReader(fileName);
+                // create BufferedReader object to go in the FileReader
+                BufferedReader bufferedReader = new BufferedReader(fileReader);
+            while((line = bufferedReader.readLine()) != null) {
+                String[] values = line.split(" ");
+                int id = Integer.parseInt(values[0]);
+                TypePokemon type = TypePokemon.valueOf(values[1]);
+                String nickName = values[2];
+                int exp = Integer.parseInt(values[3]);
+                int level = Integer.parseInt(values[4]);
+                int hp = Integer.parseInt(values[5]);
+                int atk = Integer.parseInt(values[6]);
+                int def = Integer.parseInt(values[7]);
+                int spAtk = Integer.parseInt(values[8]);
+                int spDef = Integer.parseInt(values[9]);
+                int speed = Integer.parseInt(values[10]);
+                listOfPokemon.add(new Pokemon(id, type, nickName, hp, atk, def, spAtk, spDef, speed, level, exp));
+            }   
+
+            // Always close files.
+            bufferedReader.close();
+            }
+            catch(FileNotFoundException ex) {
+                System.out.println("Unable to find file '" + fileName + "'");
+            }
+            catch(IOException ex) {
+                System.out.println("Error reading file '" + fileName + "'");
+            }
+            success = true;
             return success;
         }
         

@@ -33,39 +33,17 @@ public class Display extends Application {
     // 
     Label title = new Label("POKEDECK");
     
-    
-    //Array for pokemon names
-   //private String[] pokemonList = {"Pikachu", "Charmander", "Bulbasaur", "Evee", "Dragonite", "Lugia"};
    Storage bank = new Storage();
    private ImageView[] pokemonImages;
    // this is the index of the selected pokemon for performing operations
    private int selectedPokemon;
    // this is a list of the names of the pokemon
-   ListView<String> list = new ListView<>(FXCollections.observableArrayList(bank.getNames()));;
-/*
-   // Array for Pokemon images
-   private ImageView[] ImageViews = {
-   
-   new ImageView("pokedeck/assets/Pikachu.png"),
-   new ImageView("pokedeck/assets/Charmander.png"),
-   new ImageView("pokedeck/assets/Bulbasaur.png"),
-   new ImageView("pokedeck/assets/Evee.png"),
-   new ImageView("pokedeck/assets/Dragonite.png"),
-   new ImageView("pokedeck/assets/Lugia.png")
-  
-   };
-*/
-    
+   ListView<String> list = new ListView<>(FXCollections.observableArrayList(bank.getNames()));;    
     
     @Override
     public void start(Stage primaryStage){
     // here we need to search for the data file and read it in if it exists
-    // for now create some pokemon to add
-    bank.addPokemon(new Pokemon(TypePokemon.EVEE));
-    bank.addPokemon(new Pokemon(TypePokemon.BULBASAUR));
-    bank.addPokemon(new Pokemon(TypePokemon.CHARMANDER));
-    Pokemon pika = new Pokemon(TypePokemon.PIKACHU);
-    bank.addPokemon(pika);
+    bank.loadData();
     // after changes have been made, call the update method to ensure the display matches the pokemon
     updatePokemon();
     
@@ -107,7 +85,7 @@ public class Display extends Application {
       Button edit = new Button("Edit");
       edit.setPadding(new Insets(30, 30, 30, 30));
       Button move = new Button("Move");
-      edit.setPadding(new Insets(30, 30, 30, 30));
+      move.setPadding(new Insets(30, 30, 30, 30));
       pane.setBottom(buttons);
       buttons.getChildren().add(getSearch);
       buttons.getChildren().add(edit);
@@ -145,6 +123,15 @@ public class Display extends Application {
                   });
                   // add functionality when clicking move
                   move.setOnAction(e -> {
+                      int temp = selectedPokemon;
+                      list.getSelectionModel().selectedItemProperty().addListener(
+                              selector -> {
+                                  for (int i: list.getSelectionModel().getSelectedIndices()) {
+                                      selectedPokemon = i;
+                                  }
+                              }
+                      );
+                      bank.move(temp, selectedPokemon);
                       //bank.removePokemon(selectedPokemon); // not done yet!
                       updatePokemon();
                   });

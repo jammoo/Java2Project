@@ -36,8 +36,9 @@ public class Pokemon {
 
 
     public Pokemon(int id, TypePokemon type, String nickName, int hp, int atk, int def, int spAtk, int spDef, int speed, int level, int exp) {
-        this.id = id;
         this.type = type;
+        setStats();
+        this.id = id;
         this.nickName = nickName;
         this.hp = hp;
         this.atk = atk;
