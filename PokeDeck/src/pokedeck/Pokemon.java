@@ -13,6 +13,7 @@ public class Pokemon {
 	private int spAtk;
 	private int spDef;
 	private int speed;
+        private String img;
 
     public Pokemon(int id, TypePokemon type, String nickName) {
         this.type = type;
@@ -58,9 +59,12 @@ public class Pokemon {
 	spAtk = type.spAtk + type.spAtk*level;
 	spDef = type.spDef + type.spDef*level;
 	speed = type.speed + type.speed*level;
+        img = type.img;
     }
         
-        
+    public String getImg() {
+        return img;
+    }
 
     /**
      * @return the id
@@ -160,6 +164,14 @@ public class Pokemon {
                 + nickName + ", hp = " + hp + ", atk = " + atk + ", def = " +
                 def + ", spAtk = " + spAtk + ", spDef = " + spDef + ", speed = " +
                 speed + ", level = " + level + ", exp = " + exp;
+        return result;
+    };
+    
+    public String extract() {
+        String result = "";
+        result += id + " " + type.name() + " " + nickName + " " + hp + " " + atk + 
+                " " + def + " " + spAtk + " " + spDef + " " + speed + 
+                " " + level + " " + exp;
         return result;
     };
         

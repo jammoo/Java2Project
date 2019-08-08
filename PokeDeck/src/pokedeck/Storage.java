@@ -1,5 +1,8 @@
 package pokedeck;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -26,6 +29,14 @@ public class Storage {
             this.listOfPokemon = listOfPokemon;
         };
         
+        public String[] getNames() {
+            String[] temp = new String[this.getListOfPokemon().size()];
+            for (int i = 0; i < this.getListOfPokemon().size(); i++) {
+                temp[i] = listOfPokemon.get(i).getType().name();
+            }
+            return temp;
+        }
+        
 	/**
 	 * 
 	 * @param pokemon
@@ -42,8 +53,8 @@ public class Storage {
             listOfPokemon.remove(location);
 	}
         
-        public void replacePokemon(Pokemon pokemon) {
-            pokemon.replace(pokemon);
+        public void replacePokemon(Pokemon original, Pokemon replacement) {
+            listOfPokemon.get(listOfPokemon.indexOf(original)).replace(replacement);
         }
         
         /**
@@ -80,9 +91,27 @@ public class Storage {
          * @return 
          */
         public boolean saveData() {
-            boolean success = false;
-            ///////////////////////////////////////////////////////////////////////
-            return success;
+            boolean success = true;
+             // The name of the file to open.
+             String fileName = "pokeDeckData.txt";
+             try {
+                // create fileWriter object
+                FileWriter fileWriter = new FileWriter(fileName);
+                // create bufferWriter object
+                BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+                // write to the buffer
+                 for (int i = 0; i < listOfPokemon.size(); i++) {
+                     bufferedWriter.write(listOfPokemon.get(i).extract());
+                     bufferedWriter.newLine();
+                 }
+            // close file
+            bufferedWriter.close();
+             }
+             catch(IOException ex) {
+                 System.out.println("Error writing to file '" + fileName + "'");
+                 success = false;
+             }
+             return success;
         }
         
         @Override

@@ -23,6 +23,7 @@ public class PokeDeck {
         pokeDeck.addPokemon(new Pokemon(TypePokemon.DRAGONITE));
         pokeDeck.addPokemon(new Pokemon(TypePokemon.EVEE));
         System.out.println(pokeDeck.toString());
+        System.out.println(pokeDeck.saveData());
     }
     
 }
