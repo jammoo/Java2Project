@@ -65,7 +65,7 @@ public class Display extends Application {
       data.setPadding(new Insets(50, 10, 50, 0));
       data.setMinHeight(300);
       data.setMinWidth(300);
-      title.setPadding(new Insets(15, 15, 15, 600));
+      title.setPadding(new Insets(15, 15, 15, 530));
       title.setStyle("-fx-font: normal bold 60px 'serif'; -fx-text-fill:orange; -fx-text-alignment: center;"); // how to make it centered???
 
       BorderPane pane = new BorderPane();
@@ -77,7 +77,7 @@ public class Display extends Application {
 
 
       //HBox For Buttons
-      HBox buttons = new HBox(10);
+      HBox buttons = new HBox();
       Button add = new Button("Add");
       add.setPadding(new Insets(30, 30, 30, 30));
       Button delete = new Button("Delete");
@@ -95,7 +95,7 @@ public class Display extends Application {
       buttons.getChildren().add(add);
       buttons.getChildren().add(delete);
       buttons.setSpacing(170);
-      buttons.setPadding(new Insets(50, 50, 50, 80));
+      buttons.setPadding(new Insets(50, 50, 50, 90));
    
         
         // listen for when a name is selected, then perform actions
@@ -236,7 +236,7 @@ public class Display extends Application {
                   });
    
    
- Scene scene = new Scene(pane, 1500, 700);
+ Scene scene = new Scene(pane, 1380, 690);
  primaryStage.setTitle("Select Pokemon");  
  primaryStage.setScene(scene); 
  primaryStage.show(); 
